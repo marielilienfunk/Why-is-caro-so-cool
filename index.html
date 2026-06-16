@@ -171,17 +171,18 @@
 
     /* BASE NOTE STYLES */
     .note {
-      width: 100%;
-      min-height: 80px;
-      padding: 0;
+      position: relative;
+      width: 280px;
+      padding: 1.5cm;
       font-family: 'Caveat', cursive;
       font-size: 22px;
       line-height: 1.5;
       outline: none;
       border: none;
-      background: transparent;
       word-break: break-word;
       white-space: pre-wrap;
+      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-sizing: border-box;
     }
 
     .note[contenteditable="true"]:empty::before {
@@ -209,48 +210,19 @@
       z-index: 10;
     }
 
-    /* Zettel shell: flex column, wraps top/content/bottom */
-    .note-shell {
-      display: flex;
-      flex-direction: column;
-      width: 280px;
-      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+    /* Each note type: full image shown, anchored top, grows from bottom */
+    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');  min-height: 390px; }
+    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg');  min-height: 206px; }
+    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg');  min-height: 310px; }
+    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg');  min-height: 276px; }
+    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); min-height: 336px; }
 
-    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  --img: url('Zettel/500ppi/Asset 6@500x-100.jpg');  --mid: #ede8e0; }
-    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); --img: url('Zettel/500ppi/Asset 7@500x-100.jpg');  --mid: #e8e4dc; }
-    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  --img: url('Zettel/500ppi/Asset 8@500x-100.jpg');  --mid: #eceae5; }
-    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   --img: url('Zettel/500ppi/Asset 9@500x-100.jpg');  --mid: #e9e5dc; }
-    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);--img: url('Zettel/500ppi/Asset 10@500x-100.jpg'); --mid: #eae7e0; }
-
-    .note-top {
-      width: 100%;
-      height: 80px;
-      flex-shrink: 0;
-      background-image: var(--img);
+    .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
+      background-size: 100% auto;
       background-position: top center;
-      background-size: 100% auto;
       background-repeat: no-repeat;
-    }
-
-    .note-mid {
-      width: 100%;
-      background-color: var(--mid);
-      background-image: var(--img);
-      background-position: center center;
-      background-size: 100% auto;
-      background-repeat: no-repeat;
-      padding: 0 1.5cm 0 1.5cm;
-    }
-
-    .note-bot {
-      width: 100%;
-      height: 80px;
-      flex-shrink: 0;
-      background-image: var(--img);
-      background-position: bottom center;
-      background-size: 100% auto;
-      background-repeat: no-repeat;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .note-wrapper {
@@ -326,28 +298,11 @@
       const wrapper = document.createElement('div');
       wrapper.className = 'note-wrapper';
 
-      const shell = document.createElement('div');
-      shell.className = `note-shell ${type}`;
-
-      const topEl = document.createElement('div');
-      topEl.className = 'note-top';
-
-      const midEl = document.createElement('div');
-      midEl.className = 'note-mid';
-
-      const content = document.createElement('div');
-      content.className = 'note';
-      content.contentEditable = 'true';
-      content.setAttribute('data-placeholder', 'weil sie ...');
-      content.setAttribute('spellcheck', 'false');
-
-      const botEl = document.createElement('div');
-      botEl.className = 'note-bot';
-
-      midEl.appendChild(content);
-      shell.appendChild(topEl);
-      shell.appendChild(midEl);
-      shell.appendChild(botEl);
+      const note = document.createElement('div');
+      note.className = `note ${type}`;
+      note.contentEditable = 'true';
+      note.setAttribute('data-placeholder', 'weil sie ...');
+      note.setAttribute('spellcheck', 'false');
 
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'note-delete';
@@ -364,13 +319,12 @@
       wrapper.style.marginTop = randomOffset + 'px';
 
       wrapper.appendChild(deleteBtn);
-      wrapper.appendChild(shell);
+      wrapper.appendChild(note);
       area.appendChild(wrapper);
 
-      // Auto-scroll to note
       setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        content.focus();
+        note.focus();
       }, 50);
     });
   </script>
