@@ -211,18 +211,18 @@
     }
 
     /* Each note type: full image shown, anchored top, grows from bottom */
-    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');  min-height: 390px; }
-    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg');  min-height: 206px; }
-    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg');  min-height: 310px; }
-    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg');  min-height: 276px; }
-    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); min-height: 336px; }
+    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');  height: 390px; }
+    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg');  height: 206px; }
+    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg');  height: 310px; }
+    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg');  height: 276px; }
+    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); height: 336px; }
 
     .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
-      background-size: 100% auto;
-      background-position: top center;
+      background-size: 100% 100%;
       background-repeat: no-repeat;
       box-shadow: none;
       border-radius: 0;
+      overflow: hidden;
     }
 
     .note-wrapper {
@@ -321,6 +321,15 @@
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
+
+      note.addEventListener('input', () => {
+        let size = 22;
+        note.style.fontSize = size + 'px';
+        while (note.scrollHeight > note.clientHeight && size > 10) {
+          size -= 0.5;
+          note.style.fontSize = size + 'px';
+        }
+      });
 
       setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
