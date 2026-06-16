@@ -295,31 +295,37 @@
 
   <div class="notes-area" id="notesArea"></div>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqzvsim0fSldcZT5j558_mzTQ0OLpcYnA",
+      authDomain: "cool-caro.firebaseapp.com",
+      databaseURL: "https://cool-caro-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "cool-caro",
+      storageBucket: "cool-caro.firebasestorage.app",
+      messagingSenderId: "391623595819",
+      appId: "1:391623595819:web:5afdc264fff0bd3ac2176e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const notesRef = ref(db, 'notes');
+
     const noteTypes = ['note-z1', 'note-z2', 'note-z3', 'note-z4'];
     let lastType = null;
+    const renderedKeys = new Set();
 
-    function saveNotes() {
-      const notes = [];
-      document.querySelectorAll('.note-wrapper').forEach(wrapper => {
-        const note = wrapper.querySelector('.note');
-        const type = noteTypes.find(t => note.classList.contains(t));
-        notes.push({
-          type,
-          text: note.innerHTML,
-          marginTop: wrapper.style.marginTop,
-          fontSize: note.style.fontSize || '22px'
-        });
-      });
-      localStorage.setItem('caro-notes', JSON.stringify(notes));
-    }
+    function createNote(key, type, marginTop, text, fontSize, scroll) {
+      if (renderedKeys.has(key)) return;
+      renderedKeys.add(key);
 
-    function createNote(type, marginTop, text, fontSize, scroll) {
       const area = document.getElementById('notesArea');
-
       const wrapper = document.createElement('div');
       wrapper.className = 'note-wrapper';
-      wrapper.style.marginTop = marginTop || (Math.floor(Math.random() * 60) - 30) + 'px';
+      wrapper.dataset.key = key;
+      wrapper.style.marginTop = marginTop;
 
       const note = document.createElement('div');
       note.className = `note ${type}`;
@@ -337,13 +343,18 @@
         wrapper.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
         wrapper.style.opacity = '0';
         wrapper.style.transform = 'scale(0.8)';
-        setTimeout(() => { wrapper.remove(); saveNotes(); }, 200);
+        setTimeout(() => {
+          remove(ref(db, 'notes/' + key));
+          wrapper.remove();
+          renderedKeys.delete(key);
+        }, 200);
       });
 
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
 
+      let saveTimeout;
       note.addEventListener('input', () => {
         note.style.fontSize = '22px';
         let size = 22;
@@ -351,7 +362,10 @@
           size -= 0.5;
           note.style.fontSize = size + 'px';
         }
-        saveNotes();
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+          update(ref(db, 'notes/' + key), { text: note.innerHTML, fontSize: note.style.fontSize });
+        }, 500);
       });
 
       if (scroll) {
@@ -362,18 +376,22 @@
       }
     }
 
-    // Restore notes on load
-    const saved = localStorage.getItem('caro-notes');
-    if (saved) {
-      JSON.parse(saved).forEach(n => createNote(n.type, n.marginTop, n.text, n.fontSize, false));
-    }
+    // Listen for notes from Firebase (real-time sync)
+    onValue(notesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      Object.entries(data).forEach(([key, n]) => {
+        createNote(key, n.type, n.marginTop, n.text, n.fontSize, false);
+      });
+    });
 
     document.getElementById('addNote').addEventListener('click', () => {
       let available = noteTypes.filter(t => t !== lastType);
       const type = available[Math.floor(Math.random() * available.length)];
       lastType = type;
-      createNote(type, null, null, null, true);
-      saveNotes();
+      const marginTop = (Math.floor(Math.random() * 60) - 30) + 'px';
+      const newRef = push(notesRef, { type, marginTop, text: '', fontSize: '22px' });
+      createNote(newRef.key, type, marginTop, '', '22px', true);
     });
   </script>
 
