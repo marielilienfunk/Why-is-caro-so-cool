@@ -173,7 +173,7 @@
     .note {
       position: relative;
       width: 260px;
-      min-height: 140px;
+      height: 220px;
       padding: 1.5cm;
       font-family: 'Caveat', cursive;
       font-size: 22px;
@@ -181,6 +181,7 @@
       outline: none;
       border: none;
       resize: none;
+      overflow: hidden;
       word-break: break-word;
       white-space: pre-wrap;
       animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -363,6 +364,15 @@
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
+
+      note.addEventListener('input', () => {
+        note.style.fontSize = '22px';
+        let size = 22;
+        while (note.scrollHeight > note.clientHeight && size > 8) {
+          size -= 0.5;
+          note.style.fontSize = size + 'px';
+        }
+      });
 
       setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
