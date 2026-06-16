@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why is Caro so cool?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Anton&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'ShAdGrotesk';
+      src: url('Schriften/Sh Ad Grotesk Medium Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Notable';
+      src: url('Schriften/Notable-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Arapey';
+      src: url('Schriften/Arapey[opsz,wght].ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Handwriting';
+      src: url('Schriften/My very own handwriting..ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Calico';
+      src: url('Schriften/calico_cyrillic.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Anton', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 30px 80px;
+    }
+
+    .headline {
+      font-family: 'ShAdGrotesk', sans-serif;
+      font-size: clamp(48px, 12vw, 96px);
+      font-weight: normal;
+      color: #000;
+      text-align: left;
+      width: 100%;
+      max-width: 600px;
+      line-height: 1.0;
+      letter-spacing: -1px;
+    }
+
+    .cool-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+      width: 100%;
+      max-width: 600px;
+      flex-wrap: wrap;
+    }
+
+    .cool-letter {
+      display: inline-block;
+      animation-timing-function: cubic-bezier(0.36, 0.07, 0.19, 0.97);
+      animation-iteration-count: infinite;
+    }
+
+    .cool-letter img {
+      height: clamp(80px, 18vw, 150px);
+      width: auto;
+      display: block;
+    }
+
+    .letter-c { animation: bounce-c 2.1s infinite; }
+    .letter-o1 { animation: bounce-o1 1.8s infinite; }
+    .letter-o2 { animation: bounce-o2 2.4s infinite; }
+    .letter-l  { animation: bounce-l 1.6s infinite; }
+    .letter-q  { animation: bounce-q 2.0s infinite; align-self: flex-start; }
+
+    @keyframes bounce-c {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      30% { transform: translateY(-18px) rotate(3deg); }
+      60% { transform: translateY(-8px) rotate(-1deg); }
+    }
+
+    @keyframes bounce-o1 {
+      0%, 100% { transform: translateY(0) rotate(1deg); }
+      40% { transform: translateY(-22px) rotate(-3deg); }
+      70% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    @keyframes bounce-o2 {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      25% { transform: translateY(-14px) rotate(4deg); }
+      55% { transform: translateY(-24px) rotate(-2deg); }
+      80% { transform: translateY(-6px) rotate(1deg); }
+    }
+
+    @keyframes bounce-l {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      35% { transform: translateY(-20px) rotate(-4deg); }
+      65% { transform: translateY(-12px) rotate(2deg); }
+    }
+
+    @keyframes bounce-q {
+      0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+      50% { transform: translateY(-16px) rotate(5deg) scale(1.05); }
+    }
+
+    .plus-section {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .plus-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid #000;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-family: 'Anton', sans-serif;
+      color: #000;
+      transition: transform 0.15s ease, background 0.15s ease;
+      user-select: none;
+    }
+
+    .plus-btn:hover {
+      background: #f5f5f5;
+      transform: scale(1.08);
+    }
+
+    .plus-btn:active {
+      transform: scale(0.95);
+    }
+
+    .notes-area {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    /* BASE NOTE STYLES */
+    .note {
+      position: relative;
+      width: 260px;
+      min-height: 140px;
+      padding: 36px 24px 24px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      line-height: 1.5;
+      outline: none;
+      border: none;
+      resize: none;
+      overflow: hidden;
+      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: top center;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .note[contenteditable="true"]:empty::before {
+      content: attr(data-placeholder);
+      color: #aaa;
+      pointer-events: none;
+    }
+
+    @keyframes noteAppear {
+      from { opacity: 0; transform: rotate(var(--rot)) scale(0.7) translateY(20px); }
+      to   { opacity: 1; transform: rotate(var(--rot)) scale(1) translateY(0); }
+    }
+
+    /* TAPE element */
+    .note::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52px;
+      height: 22px;
+      background: rgba(210, 195, 160, 0.7);
+      border-radius: 2px;
+      z-index: 10;
+    }
+
+    /* PINK POST-IT */
+    .note-pink {
+      --rot: -2deg;
+      transform: rotate(-2deg);
+      background: #f4a7a7;
+      border-radius: 4px;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.12);
+      color: #222;
+    }
+
+    .note-pink::before {
+      background: rgba(180, 80, 80, 0.6);
+      width: 44px;
+      height: 18px;
+    }
+
+    /* YELLOW POST-IT */
+    .note-yellow {
+      --rot: 1.5deg;
+      transform: rotate(1.5deg);
+      background: #f5f0c0;
+      border-radius: 3px;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.10);
+      color: #222;
+    }
+
+    /* GRAY LINED PAPER */
+    .note-lined {
+      --rot: -1deg;
+      transform: rotate(-1deg);
+      background: #e8eae8;
+      border-radius: 0 0 6px 6px;
+      border-top: 3px solid #ccc;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.13);
+      color: #333;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        #c5c8c5 31px,
+        #c5c8c5 32px
+      );
+      padding-top: 40px;
+    }
+
+    .note-lined::before {
+      background: rgba(200, 185, 140, 0.75);
+    }
+
+    /* BROWN CARDBOARD */
+    .note-brown {
+      --rot: 2deg;
+      transform: rotate(2deg);
+      background: #b5956a;
+      border-radius: 4px;
+      box-shadow: 3px 5px 16px rgba(0,0,0,0.18);
+      color: #fff;
+    }
+
+    .note-brown::before {
+      background: rgba(200, 185, 140, 0.8);
+      top: -12px;
+      left: 20%;
+      transform: none;
+      rotate: -8deg;
+    }
+
+    .note-brown::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      right: 18%;
+      width: 52px;
+      height: 22px;
+      background: rgba(200, 185, 140, 0.8);
+      rotate: 8deg;
+    }
+
+    /* WHITE NOTEBOOK PAPER */
+    .note-notebook {
+      --rot: -1.5deg;
+      transform: rotate(-1.5deg);
+      background: #f9f8f6;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.10);
+      color: #222;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        #ddd 27px,
+        #ddd 28px
+      );
+      border-top: none;
+      padding-top: 40px;
+    }
+
+    /* torn edge top for notebook */
+    .note-notebook::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 10px,
+        #f9f8f6 10px,
+        #f9f8f6 18px
+      );
+      border-bottom: 1px solid #ddd;
+    }
+
+    .note-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .note-wrapper:nth-child(even) {
+      align-self: flex-end;
+    }
+
+    .note-wrapper:nth-child(3n) {
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="headline">Why is Caro so</div>
+
+  <div class="cool-row">
+    <span class="cool-letter letter-c"><img src="C.jpg" alt="C" /></span>
+    <span class="cool-letter letter-o1"><img src="o1.jpg" alt="o" /></span>
+    <span class="cool-letter letter-o2"><img src="o2.jpg" alt="o" /></span>
+    <span class="cool-letter letter-l"><img src="L.jpg" alt="l" /></span>
+    <span class="cool-letter letter-q"><img src="Q.jpg" alt="?" /></span>
+  </div>
+
+  <div class="plus-section">
+    <button class="plus-btn" id="addNote" aria-label="Zettel hinzufügen">+</button>
+  </div>
+
+  <div class="notes-area" id="notesArea"></div>
+
+  <script>
+    const noteTypes = ['note-pink', 'note-yellow', 'note-lined', 'note-brown', 'note-notebook'];
+    let lastType = null;
+
+    document.getElementById('addNote').addEventListener('click', () => {
+      const area = document.getElementById('notesArea');
+
+      // Pick a random type, avoid repeating same one twice
+      let available = noteTypes.filter(t => t !== lastType);
+      const type = available[Math.floor(Math.random() * available.length)];
+      lastType = type;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'note-wrapper';
+
+      const note = document.createElement('div');
+      note.className = `note ${type}`;
+      note.contentEditable = 'true';
+      note.setAttribute('data-placeholder', 'weil sie ...');
+      note.setAttribute('spellcheck', 'false');
+
+      wrapper.appendChild(note);
+      area.appendChild(wrapper);
+
+      // Auto-scroll to note
+      setTimeout(() => {
+        wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        note.focus();
+      }, 50);
+    });
+  </script>
+
+</body>
+</html>
