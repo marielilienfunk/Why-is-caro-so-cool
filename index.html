@@ -220,14 +220,16 @@
     .note-z10 { --rot: -1.5deg; transform: rotate(-1.5deg); background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); }
 
     .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
-      background-size: 100% 100%;
+      background-size: 100% auto;
+      background-position: top center;
       background-repeat: no-repeat;
       background-color: transparent;
       box-shadow: none;
       border-radius: 0;
       color: #333;
       min-width: 280px;
-      min-height: 200px;
+      min-height: 300px;
+      padding-bottom: 4cm;
     }
 
     .note-z6::before, .note-z7::before, .note-z8::before, .note-z9::before, .note-z10::before {
