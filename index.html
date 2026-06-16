@@ -210,136 +210,25 @@
       z-index: 10;
     }
 
-    /* REAL IMAGE ZETTEL */
-    .note-real {
-      --rot: -1.5deg;
-      transform: rotate(-1.5deg);
-      background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');
+    .note-z6 { --rot: -2deg; transform: rotate(-2deg); background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg'); }
+    .note-z7 { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg'); }
+    .note-z8 { --rot: -1deg; transform: rotate(-1deg); background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg'); }
+    .note-z9 { --rot: 2deg; transform: rotate(2deg); background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg'); }
+    .note-z10 { --rot: -1.5deg; transform: rotate(-1.5deg); background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); }
+
+    .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
       background-size: 100% 100%;
       background-repeat: no-repeat;
       background-color: transparent;
       box-shadow: none;
       border-radius: 0;
-      color: #222;
+      color: #333;
       min-width: 280px;
       min-height: 200px;
     }
 
-    .note-real::before {
+    .note-z6::before, .note-z7::before, .note-z8::before, .note-z9::before, .note-z10::before {
       display: none;
-    }
-
-    /* PINK POST-IT */
-    .note-pink {
-      --rot: -2deg;
-      transform: rotate(-2deg);
-      background: #f4a7a7;
-      border-radius: 4px;
-      box-shadow: 2px 4px 12px rgba(0,0,0,0.12);
-      color: #222;
-    }
-
-    .note-pink::before {
-      background: rgba(180, 80, 80, 0.6);
-      width: 44px;
-      height: 18px;
-    }
-
-    /* YELLOW POST-IT */
-    .note-yellow {
-      --rot: 1.5deg;
-      transform: rotate(1.5deg);
-      background: #f5f0c0;
-      border-radius: 3px;
-      box-shadow: 2px 4px 14px rgba(0,0,0,0.10);
-      color: #222;
-    }
-
-    /* GRAY LINED PAPER */
-    .note-lined {
-      --rot: -1deg;
-      transform: rotate(-1deg);
-      background: #e8eae8;
-      border-radius: 0 0 6px 6px;
-      border-top: 3px solid #ccc;
-      box-shadow: 2px 4px 14px rgba(0,0,0,0.13);
-      color: #333;
-      background-image: repeating-linear-gradient(
-        transparent,
-        transparent 31px,
-        #c5c8c5 31px,
-        #c5c8c5 32px
-      );
-      padding-top: 40px;
-    }
-
-    .note-lined::before {
-      background: rgba(200, 185, 140, 0.75);
-    }
-
-    /* BROWN CARDBOARD */
-    .note-brown {
-      --rot: 2deg;
-      transform: rotate(2deg);
-      background: #b5956a;
-      border-radius: 4px;
-      box-shadow: 3px 5px 16px rgba(0,0,0,0.18);
-      color: #fff;
-    }
-
-    .note-brown::before {
-      background: rgba(200, 185, 140, 0.8);
-      top: -12px;
-      left: 20%;
-      transform: none;
-      rotate: -8deg;
-    }
-
-    .note-brown::after {
-      content: '';
-      position: absolute;
-      top: -12px;
-      right: 18%;
-      width: 52px;
-      height: 22px;
-      background: rgba(200, 185, 140, 0.8);
-      rotate: 8deg;
-    }
-
-    /* WHITE NOTEBOOK PAPER */
-    .note-notebook {
-      --rot: -1.5deg;
-      transform: rotate(-1.5deg);
-      background: #f9f8f6;
-      border-radius: 0 0 4px 4px;
-      box-shadow: 2px 4px 12px rgba(0,0,0,0.10);
-      color: #222;
-      background-image: repeating-linear-gradient(
-        transparent,
-        transparent 27px,
-        #ddd 27px,
-        #ddd 28px
-      );
-      border-top: none;
-      padding-top: 40px;
-    }
-
-    /* torn edge top for notebook */
-    .note-notebook::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 12px;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent 0px,
-        transparent 10px,
-        #f9f8f6 10px,
-        #f9f8f6 18px
-      );
-      border-bottom: 1px solid #ddd;
     }
 
     .note-wrapper {
@@ -405,7 +294,7 @@
   <div class="notes-area" id="notesArea"></div>
 
   <script>
-    const noteTypes = ['note-real', 'note-pink', 'note-yellow', 'note-lined', 'note-brown', 'note-notebook'];
+    const noteTypes = ['note-z6', 'note-z7', 'note-z8', 'note-z9', 'note-z10'];
     let lastType = null;
 
     document.getElementById('addNote').addEventListener('click', () => {
