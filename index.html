@@ -128,14 +128,6 @@
       50% { transform: translateY(-16px) rotate(5deg) scale(1.05); }
     }
 
-    .plus-section {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
     .plus-btn {
       width: 36px;
       height: 36px;
@@ -151,6 +143,8 @@
       transition: transform 0.15s ease, background 0.15s ease;
       user-select: none;
       padding: 0;
+      flex-shrink: 0;
+      align-self: center;
     }
 
     .plus-btn:hover {
@@ -160,6 +154,23 @@
 
     .plus-btn:active {
       transform: scale(0.95);
+    }
+
+    /* Desktop: plus is inline in the notes row */
+    .notes-area {
+      margin-top: 40px;
+    }
+
+    /* Mobile: plus goes below */
+    @media (max-width: 600px) {
+      .notes-area {
+        flex-direction: column;
+        align-items: center;
+      }
+      .plus-btn {
+        align-self: center;
+        margin-top: 16px;
+      }
     }
 
     .notes-area {
@@ -289,11 +300,9 @@
     <span class="cool-letter letter-q"><img src="Q.jpg" alt="?" /></span>
   </div>
 
-  <div class="plus-section">
+  <div class="notes-area" id="notesArea">
     <button class="plus-btn" id="addNote" aria-label="Zettel hinzufügen">+</button>
   </div>
-
-  <div class="notes-area" id="notesArea"></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -352,7 +361,8 @@
 
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
-      area.appendChild(wrapper);
+      const btn = document.getElementById('addNote');
+      area.insertBefore(wrapper, btn);
 
       let saveTimeout;
       note.addEventListener('input', () => {
