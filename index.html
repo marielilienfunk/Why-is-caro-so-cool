@@ -210,6 +210,25 @@
       z-index: 10;
     }
 
+    /* REAL IMAGE ZETTEL */
+    .note-real {
+      --rot: -1.5deg;
+      transform: rotate(-1.5deg);
+      background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      color: #222;
+      min-width: 280px;
+      min-height: 200px;
+    }
+
+    .note-real::before {
+      display: none;
+    }
+
     /* PINK POST-IT */
     .note-pink {
       --rot: -2deg;
@@ -356,7 +375,7 @@
   <div class="notes-area" id="notesArea"></div>
 
   <script>
-    const noteTypes = ['note-pink', 'note-yellow', 'note-lined', 'note-brown', 'note-notebook'];
+    const noteTypes = ['note-real', 'note-pink', 'note-yellow', 'note-lined', 'note-brown', 'note-notebook'];
     let lastType = null;
 
     document.getElementById('addNote').addEventListener('click', () => {
