@@ -158,12 +158,14 @@
 
     .notes-area {
       width: 100%;
-      max-width: 600px;
+      max-width: 100%;
       margin-top: 40px;
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 40px;
-      align-items: flex-start;
+      padding: 0 40px;
+      box-sizing: border-box;
     }
 
     /* BASE NOTE STYLES */
@@ -266,12 +268,8 @@
       background: rgba(0,0,0,0.4);
     }
 
-    .note-wrapper:nth-child(even) {
-      align-self: flex-end;
-    }
-
-    .note-wrapper:nth-child(3n) {
-      align-self: center;
+    .note-wrapper {
+      align-self: flex-start;
     }
   </style>
 </head>
@@ -324,6 +322,11 @@
         wrapper.style.transform = 'scale(0.8)';
         setTimeout(() => wrapper.remove(), 200);
       });
+
+      // Random horizontal position across full width minus note width (~280px) and padding (40px each side)
+      const maxOffset = Math.max(0, window.innerWidth - 280 - 80);
+      const randomLeft = Math.floor(Math.random() * maxOffset);
+      wrapper.style.marginLeft = randomLeft + 'px';
 
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
