@@ -292,22 +292,35 @@
     const noteTypes = ['note-z1', 'note-z2', 'note-z3', 'note-z4'];
     let lastType = null;
 
-    document.getElementById('addNote').addEventListener('click', () => {
-      const area = document.getElementById('notesArea');
+    function saveNotes() {
+      const notes = [];
+      document.querySelectorAll('.note-wrapper').forEach(wrapper => {
+        const note = wrapper.querySelector('.note');
+        const type = noteTypes.find(t => note.classList.contains(t));
+        notes.push({
+          type,
+          text: note.innerHTML,
+          marginTop: wrapper.style.marginTop,
+          fontSize: note.style.fontSize || '22px'
+        });
+      });
+      localStorage.setItem('caro-notes', JSON.stringify(notes));
+    }
 
-      // Pick a random type, avoid repeating same one twice
-      let available = noteTypes.filter(t => t !== lastType);
-      const type = available[Math.floor(Math.random() * available.length)];
-      lastType = type;
+    function createNote(type, marginTop, text, fontSize, scroll) {
+      const area = document.getElementById('notesArea');
 
       const wrapper = document.createElement('div');
       wrapper.className = 'note-wrapper';
+      wrapper.style.marginTop = marginTop || (Math.floor(Math.random() * 60) - 30) + 'px';
 
       const note = document.createElement('div');
       note.className = `note ${type}`;
       note.contentEditable = 'true';
       note.setAttribute('data-placeholder', 'weil sie ...');
       note.setAttribute('spellcheck', 'false');
+      if (text) note.innerHTML = text;
+      if (fontSize) note.style.fontSize = fontSize;
 
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'note-delete';
@@ -317,11 +330,8 @@
         wrapper.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
         wrapper.style.opacity = '0';
         wrapper.style.transform = 'scale(0.8)';
-        setTimeout(() => wrapper.remove(), 200);
+        setTimeout(() => { wrapper.remove(); saveNotes(); }, 200);
       });
-
-      const randomOffset = Math.floor(Math.random() * 60) - 30;
-      wrapper.style.marginTop = randomOffset + 'px';
 
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
@@ -334,12 +344,29 @@
           size -= 0.5;
           note.style.fontSize = size + 'px';
         }
+        saveNotes();
       });
 
-      setTimeout(() => {
-        wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        note.focus();
-      }, 50);
+      if (scroll) {
+        setTimeout(() => {
+          wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          note.focus();
+        }, 50);
+      }
+    }
+
+    // Restore notes on load
+    const saved = localStorage.getItem('caro-notes');
+    if (saved) {
+      JSON.parse(saved).forEach(n => createNote(n.type, n.marginTop, n.text, n.fontSize, false));
+    }
+
+    document.getElementById('addNote').addEventListener('click', () => {
+      let available = noteTypes.filter(t => t !== lastType);
+      const type = available[Math.floor(Math.random() * available.length)];
+      lastType = type;
+      createNote(type, null, null, null, true);
+      saveNotes();
     });
   </script>
 
