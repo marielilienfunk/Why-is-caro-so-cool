@@ -213,22 +213,25 @@
       z-index: 10;
     }
 
-    .note-z6 { --rot: -2deg; transform: rotate(-2deg); background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg'); }
-    .note-z7 { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg'); }
-    .note-z8 { --rot: -1deg; transform: rotate(-1deg); background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg'); }
-    .note-z9 { --rot: 2deg; transform: rotate(2deg); background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg'); }
-    .note-z10 { --rot: -1.5deg; transform: rotate(-1.5deg); background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); }
+    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  --img: url('Zettel/500ppi/Asset 6@500x-100.jpg'); }
+    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); --img: url('Zettel/500ppi/Asset 7@500x-100.jpg'); }
+    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  --img: url('Zettel/500ppi/Asset 8@500x-100.jpg'); }
+    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   --img: url('Zettel/500ppi/Asset 9@500x-100.jpg'); }
+    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);--img: url('Zettel/500ppi/Asset 10@500x-100.jpg'); }
 
     .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
-      background-size: 100% auto;
-      background-position: top center;
+      /* top layer: image anchored to top, fixed height */
+      /* bottom layer: image anchored to bottom, fixed height */
+      background-image: var(--img), var(--img);
+      background-position: top center, bottom center;
+      background-size: 100% 180px, 100% 120px;
       background-repeat: no-repeat;
-      background-color: transparent;
+      background-color: #f2efea;
       box-shadow: none;
       border-radius: 0;
       color: #333;
       min-width: 280px;
-      min-height: 300px;
+      min-height: 320px;
       padding-bottom: 4cm;
     }
 
