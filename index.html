@@ -172,8 +172,8 @@
     /* BASE NOTE STYLES */
     .note {
       position: relative;
-      width: 347px;
-      padding: 1.5cm;
+      width: 260px;
+      padding: 2cm 1.5cm 1.5cm 1.5cm;
       font-family: 'Caveat', cursive;
       font-size: 22px;
       line-height: 1.5;
@@ -213,13 +213,12 @@
       z-index: 10;
     }
 
-    .note-z6  { --rot: -2deg;   transform: rotate(-2deg);   background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');  height: 483px; }
-    .note-z7  { --rot: 1.5deg;  transform: rotate(1.5deg);  background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg');  height: 255px; }
-    .note-z8  { --rot: -1deg;   transform: rotate(-1deg);   background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg');  height: 384px; }
-    .note-z9  { --rot: 2deg;    transform: rotate(2deg);    background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg');  height: 341px; }
-    .note-z10 { --rot: -1.5deg; transform: rotate(-1.5deg); background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); height: 416px; }
+    .note-z1 { --rot: -2deg;   transform: rotate(-2deg);   background-image: url('Zettel/500ppi/zettel 1.jpg'); height: 256px; }
+    .note-z2 { --rot: 1.5deg;  transform: rotate(1.5deg);  background-image: url('Zettel/500ppi/Zettel 2.jpg'); height: 312px; }
+    .note-z3 { --rot: -1deg;   transform: rotate(-1deg);   background-image: url('Zettel/500ppi/Zettel 3.jpg'); height: 288px; }
+    .note-z4 { --rot: 2deg;    transform: rotate(2deg);    background-image: url('Zettel/500ppi/Zettel 4.jpg'); height: 362px; }
 
-    .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
+    .note-z1, .note-z2, .note-z3, .note-z4 {
       background-size: 100% 100%;
       background-repeat: no-repeat;
       box-shadow: none;
@@ -227,7 +226,7 @@
       color: #333;
     }
 
-    .note-z6::before, .note-z7::before, .note-z8::before, .note-z9::before, .note-z10::before {
+    .note-z1::before, .note-z2::before, .note-z3::before, .note-z4::before {
       display: none;
     }
 
@@ -290,7 +289,7 @@
   <div class="notes-area" id="notesArea"></div>
 
   <script>
-    const noteTypes = ['note-z6', 'note-z7', 'note-z8', 'note-z9', 'note-z10'];
+    const noteTypes = ['note-z1', 'note-z2', 'note-z3', 'note-z4'];
     let lastType = null;
 
     document.getElementById('addNote').addEventListener('click', () => {
