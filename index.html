@@ -347,6 +347,36 @@
       display: inline-block;
     }
 
+    .note-delete {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.15);
+      color: #fff;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s ease, background 0.15s ease;
+      z-index: 20;
+      padding: 0;
+    }
+
+    .note-wrapper:hover .note-delete {
+      opacity: 1;
+    }
+
+    .note-delete:hover {
+      background: rgba(0,0,0,0.4);
+    }
+
     .note-wrapper:nth-child(even) {
       align-self: flex-end;
     }
@@ -395,6 +425,18 @@
       note.setAttribute('data-placeholder', 'weil sie ...');
       note.setAttribute('spellcheck', 'false');
 
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'note-delete';
+      deleteBtn.innerHTML = '×';
+      deleteBtn.setAttribute('aria-label', 'Zettel entfernen');
+      deleteBtn.addEventListener('click', () => {
+        wrapper.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+        wrapper.style.opacity = '0';
+        wrapper.style.transform = 'scale(0.8)';
+        setTimeout(() => wrapper.remove(), 200);
+      });
+
+      wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
 
