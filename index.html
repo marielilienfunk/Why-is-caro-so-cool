@@ -171,8 +171,7 @@
 
     /* BASE NOTE STYLES */
     .note {
-      position: relative;
-      width: 280px;
+      display: block;
       padding: 1.5cm;
       font-family: 'Caveat', cursive;
       font-size: 22px;
@@ -181,7 +180,7 @@
       border: none;
       word-break: break-word;
       white-space: pre-wrap;
-      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
       box-sizing: border-box;
     }
 
@@ -218,11 +217,13 @@
     .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); height: 336px; }
 
     .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
+      width: 280px;
       background-size: 100% 100%;
       background-repeat: no-repeat;
       box-shadow: none;
       border-radius: 0;
       overflow: hidden;
+      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .note-wrapper {
