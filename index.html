@@ -67,22 +67,22 @@
     .cool-row {
       display: flex;
       align-items: flex-end;
-      gap: 8px;
+      gap: 0;
       margin-top: 16px;
       width: 100%;
-      max-width: 600px;
-      flex-wrap: wrap;
+      max-width: 100%;
     }
 
     .cool-letter {
       display: inline-block;
+      flex: 1;
       animation-timing-function: cubic-bezier(0.36, 0.07, 0.19, 0.97);
       animation-iteration-count: infinite;
     }
 
     .cool-letter img {
-      height: clamp(80px, 18vw, 150px);
-      width: auto;
+      width: 100%;
+      height: auto;
       display: block;
     }
 
