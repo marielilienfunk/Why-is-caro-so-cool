@@ -171,16 +171,20 @@
 
     /* BASE NOTE STYLES */
     .note {
-      display: block;
+      position: relative;
+      width: 260px;
+      min-height: 140px;
       padding: 1.5cm;
       font-family: 'Caveat', cursive;
       font-size: 22px;
       line-height: 1.5;
       outline: none;
       border: none;
+      resize: none;
       word-break: break-word;
       white-space: pre-wrap;
-      overflow: hidden;
+      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: top center;
       box-sizing: border-box;
     }
 
@@ -209,21 +213,58 @@
       z-index: 10;
     }
 
-    /* Each note type: full image shown, anchored top, grows from bottom */
-    .note-z6  { --rot: -2deg;  transform: rotate(-2deg);  background-image: url('Zettel/500ppi/Asset 6@500x-100.jpg');  height: 390px; }
-    .note-z7  { --rot: 1.5deg; transform: rotate(1.5deg); background-image: url('Zettel/500ppi/Asset 7@500x-100.jpg');  height: 206px; }
-    .note-z8  { --rot: -1deg;  transform: rotate(-1deg);  background-image: url('Zettel/500ppi/Asset 8@500x-100.jpg');  height: 310px; }
-    .note-z9  { --rot: 2deg;   transform: rotate(2deg);   background-image: url('Zettel/500ppi/Asset 9@500x-100.jpg');  height: 276px; }
-    .note-z10 { --rot: -1.5deg;transform: rotate(-1.5deg);background-image: url('Zettel/500ppi/Asset 10@500x-100.jpg'); height: 336px; }
+    /* PINK POST-IT */
+    .note-pink {
+      --rot: -2deg;
+      transform: rotate(-2deg);
+      background: #f4a7a7;
+      border-radius: 4px;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.12);
+      color: #222;
+    }
+    .note-pink::before { background: rgba(180,80,80,0.6); width: 44px; height: 18px; }
 
-    .note-z6, .note-z7, .note-z8, .note-z9, .note-z10 {
-      width: 280px;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      box-shadow: none;
-      border-radius: 0;
-      overflow: hidden;
-      animation: noteAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* YELLOW POST-IT */
+    .note-yellow {
+      --rot: 1.5deg;
+      transform: rotate(1.5deg);
+      background: #f5f0c0;
+      border-radius: 3px;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.10);
+      color: #222;
+    }
+
+    /* GRAY LINED PAPER */
+    .note-lined {
+      --rot: -1deg;
+      transform: rotate(-1deg);
+      background: #e8eae8;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.13);
+      color: #333;
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #c5c8c5 31px, #c5c8c5 32px);
+    }
+    .note-lined::before { background: rgba(200,185,140,0.75); }
+
+    /* BROWN CARDBOARD */
+    .note-brown {
+      --rot: 2deg;
+      transform: rotate(2deg);
+      background: #b5956a;
+      border-radius: 4px;
+      box-shadow: 3px 5px 16px rgba(0,0,0,0.18);
+      color: #fff;
+    }
+
+    /* WHITE NOTEBOOK */
+    .note-notebook {
+      --rot: -1.5deg;
+      transform: rotate(-1.5deg);
+      background: #f9f8f6;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.10);
+      color: #222;
+      background-image: repeating-linear-gradient(transparent, transparent 27px, #ddd 27px, #ddd 28px);
     }
 
     .note-wrapper {
@@ -285,7 +326,7 @@
   <div class="notes-area" id="notesArea"></div>
 
   <script>
-    const noteTypes = ['note-z6', 'note-z7', 'note-z8', 'note-z9', 'note-z10'];
+    const noteTypes = ['note-pink', 'note-yellow', 'note-lined', 'note-brown', 'note-notebook'];
     let lastType = null;
 
     document.getElementById('addNote').addEventListener('click', () => {
@@ -322,15 +363,6 @@
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
-
-      note.addEventListener('input', () => {
-        let size = 22;
-        note.style.fontSize = size + 'px';
-        while (note.scrollHeight > note.clientHeight && size > 10) {
-          size -= 0.5;
-          note.style.fontSize = size + 'px';
-        }
-      });
 
       setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
