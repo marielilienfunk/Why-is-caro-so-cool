@@ -324,6 +324,9 @@
         setTimeout(() => wrapper.remove(), 200);
       });
 
+      const randomOffset = Math.floor(Math.random() * 60) - 30;
+      wrapper.style.marginTop = randomOffset + 'px';
+
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
       area.appendChild(wrapper);
