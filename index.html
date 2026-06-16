@@ -160,12 +160,13 @@
       width: 100%;
       max-width: 100%;
       margin-top: 40px;
-      position: relative;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       gap: 40px;
       padding: 0 40px;
       box-sizing: border-box;
+      align-items: flex-start;
     }
 
     /* BASE NOTE STYLES */
@@ -322,11 +323,6 @@
         wrapper.style.transform = 'scale(0.8)';
         setTimeout(() => wrapper.remove(), 200);
       });
-
-      // Random horizontal position across full width minus note width (~280px) and padding (40px each side)
-      const maxOffset = Math.max(0, window.innerWidth - 280 - 80);
-      const randomLeft = Math.floor(Math.random() * maxOffset);
-      wrapper.style.marginLeft = randomLeft + 'px';
 
       wrapper.appendChild(deleteBtn);
       wrapper.appendChild(note);
